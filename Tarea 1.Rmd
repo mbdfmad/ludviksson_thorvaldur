@@ -1,0 +1,216 @@
+---
+title: "Tarea 1"
+author: "Thorvaldur"
+date: "9/16/2021"
+output: html_document
+---
+## 1)
+#### Making a vector called dado_honesto
+```{r}
+library(tidyverse)
+
+```
+```{r}
+dado_honesto=sample(1:6, size=100, replace=TRUE)
+show(dado_honesto)
+
+```
+#### Calculating the abs and rel frequencies
+```{r}
+absfr =table(dado_honesto )
+show(absfr)
+
+relfr= table(dado_honesto)/length(dado_honesto)
+show(relfr)
+```
+
+
+
+#### Combining both the frequencies into one table
+```{r}
+total <- rbind(absfr, relfr)
+rownames(total) = c("Absolute frequency", "Relative Frequency")
+
+show(total)
+
+```
+#### Making a new vector where the number 6 is twice as likely to be chosen than 1-5
+
+```{r}
+dado_cargado = sample(1:6, size = 100, replace = TRUE, prob = c(1, 1, 1, 1, 1, 2))
+show(dado_cargado)
+
+```
+```{r}
+absfr1=table(dado_cargado)
+show(absfr1)
+
+relfr1= table(dado_cargado)/length(dado_cargado)
+show(relfr1)
+```
+
+#### Table with the frequencies
+```{r}
+total1 <- rbind(absfr1, relfr1)
+rownames(total1) = c("Absolute frequency", "Relative Frequency")
+
+show(total1)
+```
+
+
+#### Using the seq and rep functions to make vectors
+```{r}
+vector=rep(1:5,1:5)
+show(vector)
+vector1=rep(1:4,4)
+show(vector1)
+```
+
+
+
+## 2)
+
+```{r}
+ft <- read_csv("Diabetes.csv")
+x <- spec(ft)
+
+
+
+```
+
+#### Arrange both genders in 3 different age groups and then making a table with abs- and rel frequencies
+```{r}
+ft$ageGroup <-
+  ifelse(ft$age<=40, "1",
+         ifelse(ft$age>40 & ft$age<=70, "2",
+                ifelse(ft$age>70 & ft$age<=100, "3","NA")))
+
+
+
+
+
+
+
+
+absf =table(ft$ageGroup)
+
+
+relf= table(ft$ageGroup)/length(ft$ageGroup)
+
+
+ageGroup_table <- rbind(absf, relf)
+rownames(ageGroup_table ) = c("Absolute frequency", "Relative frequency")
+
+show(ageGroup_table)
+```
+
+
+#### Changing units and calculating BMI
+```{r}
+ft$weight<- ft$weight*0.454
+ft$height <- ft$height*0.0254
+
+ft$BMI <- (ft$weight/(ft$height)^2)
+```
+#### Ranking people in weight group according to the BMI scale
+```{r}
+ft$ BMIcat <-
+  ifelse(ft$BMI<18.5, "Underweight",
+         ifelse(ft$BMI>=18.5 & ft$BMI<25, "Normal Weight",
+                ifelse(ft$BMI>=25 & ft$BMI<30, "Overweight",
+                       ifelse(ft$BMI>=30, "Obesity","NA"))))
+```
+#### Making a bar chart that shows how many people are in each BMI group
+```{r}
+BMIgroup= table(ft$BMIcat)
+BMIgroup
+
+barplot(BMIgroup, main="BMI Group Distribution",
+   xlab="BMI Group",col=c("darkblue","red"))
+
+```
+
+#### Finding the mean value of BMI and cholesterol of women in every age group
+```{r}
+bmi1=mean(ft$BMI [ft$gender=="female" & ft$ageGroup=="1"] , na.rm = TRUE)
+chol1=mean(ft$chol [ft$gender=="female" & ft$ageGroup=="1"] , na.rm = TRUE)
+show(bmi1)
+bmi2=mean(ft$BMI [ft$gender=="female" & ft$ageGroup=="2"] , na.rm = TRUE)
+chol2=mean(ft$chol [ft$gender=="female" & ft$ageGroup=="2"] , na.rm = TRUE)
+
+bmi3=mean(ft$BMI [ft$gender=="female" & ft$ageGroup=="3"] , na.rm = TRUE)
+chol3=mean(ft$chol [ft$gender=="female" & ft$ageGroup=="3"] , na.rm = TRUE)
+
+WomenBmi <- rbind(bmi1,bmi2,bmi3) 
+
+colnames(WomenBmi ) = c("Mean BMI")
+rownames(WomenBmi)=c("Group1", "Group2", "Group3")
+
+WomenBmi
+
+WomenChol <- rbind(chol1,chol2, chol3) 
+
+colnames(WomenChol ) = c("Mean Chol")
+rownames(WomenChol)=c("Group1", "Group2", "Group3")
+
+WomenChol
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+#### Here we can see the distribution of BMI by gender in every age group
+```{r}
+ggplot(ft, aes(x=gender, y=BMI, color=ageGroup))+geom_point() +facet_wrap(~ft$ageGroup)+ labs(x="Gender", y="BMI")
+```
+
+#### Distribution of cholesterol
+```{r}
+ggplot(ft, aes(x=gender, y=chol, color=ageGroup))+geom_point() +facet_wrap(~ft$ageGroup)+ labs(x="Gender", y="Cholesterol")
+```
+
+
+
+## 3)
+
+#### I did not manage to make an integral & non-zero vector nor get the function to work
+
+```{r}
+cambiosSigno=sample(-15:15, size=20, replace=TRUE)
+show(cambiosSigno)
+
+signchange <- function(x) {
+    index = 0
+    for(i in 1:length(x))
+    {
+        if(x[i] < 0)
+        {
+            return (index)
+        }
+        else
+        {
+            index = index +1
+        }
+    }
+    return (index)
+}
+signchange(cambiosSigno)
+
+```
+
