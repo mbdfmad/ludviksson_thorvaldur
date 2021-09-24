@@ -1,0 +1,116 @@
+---
+title: "Tarea 2"
+author: "Thorvaldur"
+date: "9/22/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+### 1)
+
+```{r}
+
+muestra = sample(0:3, size = 10, replace = TRUE, prob = c(64, 48, 12, 1))
+show(muestra)
+
+var(muestra)
+mean(muestra)
+```
+
+#### 2)
+```{r}
+
+
+
+mediasMuestra = replicate(10000, {
+muestra2 = sample(0:3, size = 10, replace = TRUE, prob = c(64, 48, 12, 1))
+
+})
+
+
+mediasMuestra1 = replicate(10000, {
+muestra2 = sample(0:3, size = 30, replace = TRUE, prob = c(64, 48, 12, 1))
+
+})
+
+
+relfr2=table(mediasMuestra)/length(mediasMuestra)
+show(relfr2)
+
+barplot(relfr2,main="Sample Mean Distribution",
+   xlab="Samples", col=c("orange","blue"))
+
+
+relfr3=table(mediasMuestra1)/length(mediasMuestra1)
+show(relfr3)
+
+barplot(relfr3,main="Sample Mean Distribution",
+   xlab="Samples", col=c("darkblue","red"))
+```
+
+
+
+
+#### 3)
+
+```{r}
+
+
+muestra3=sample(0:3, size = 10, replace = TRUE, prob = c(64, 48, 12, 1))
+
+
+muestra4=sample(0:2, size = 10, replace = TRUE, prob = c(2, 1,1))
+
+
+Sum=muestra3+muestra4
+show(Sum)
+
+#X1+X2" can take values from 0:5"  
+```
+
+Find the theoretical mean of the sum X1 + X2. Then use sample and replicate to simulate
+one hundred thousand values of this variable sum. Find the mean of those values. Warning: not the same type of
+analysis that we have done in the second section.
+
+#### 4)
+
+```{r}
+mean(Sum)
+
+Repsum = replicate(10000, { 
+  sum=(muestra3+muestra4)
+  
+  
+
+
+})
+```
+
+
+
+
+
+
+#### 5) 
+
+```{r}
+
+
+testResults <- read_csv("testResults.csv")
+
+
+ft<-separate(testResults, gender_age, into=c("Gender","Age"), sep = "_",
+remove = TRUE, convert = FALSE)
+
+
+
+
+
+
+
+```
+
+
