@@ -197,7 +197,9 @@ show(cambiosSigno)
 
 signchange <- function(x) {
     index = 0
-    for(i in 1:length(x))
+   
+    boolean
+     for(i in 1:length(x))
     {
         if(x[i] < 0)
         {
@@ -208,8 +210,9 @@ signchange <- function(x) {
             index = index +1
         }
     }
-    return (index)
+    
 }
+
 signchange(cambiosSigno)
 
 ```
